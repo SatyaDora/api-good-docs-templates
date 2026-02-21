@@ -1,0 +1,42 @@
+openapi: 3.0.0
+info:
+  title: Technical Writer Portfolio API
+  description: An API to manage and retrieve technical writing project samples and documentation metadata.
+  version: 1.0.0
+servers:
+  - url: https://api.prowesscorp.com/v1
+    description: Production Server
+paths:
+  /samples:
+    get:
+      summary: Retrieve all writing samples
+      description: Returns a list of technical writing samples filtered by category.
+      parameters:
+        - name: category
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [API, User Guide, Whitepaper]
+      responses:
+        '200':
+          description: A successful list of writing samples.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Sample'
+components:
+  schemas:
+    Sample:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        url:
+          type: string
+          format: uri
